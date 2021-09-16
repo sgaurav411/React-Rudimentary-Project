@@ -5,18 +5,19 @@ import Cart from "./DisplayCartSummary.js";
 import {createStore} from 'redux';
 import {Link} from 'react-router-dom';
 import { connect } from "react-redux";
+import {useDispatch ,useSelecto} from "react-redux";
 
 import {addThistocart,removeThisFromCart} from './redux/Shopping/shopping-actions';
 import store from "./redux/store.js";
 
 const Shop = (items,cart_contents) => {
 
-    
      const [cartTotal, setCartTotal] = useState(0);
 
+     const dispatch=useDispatch();
      // const [adBut,cartBut]=useState(<button>DUMMY BUTTON</button>)
      // const items = details;
-     
+     console.log('items');
      console.log(items);
      cart_contents=items.cart_contents;
      items=items.items;
@@ -25,15 +26,15 @@ const Shop = (items,cart_contents) => {
      console.log("CART :::::::");
 
      console.log(cart_contents);
-     const [cart, setCart] = useState(cart_contents);
+     // const [cart, setCart] = useState(cart_contents);
      // const store = createStore(reducer);
 
      // const [whatwehave, setwhatwehave] = useState(details);
      // const whatwehave=details;
 
-     useEffect(() => {
-          total();
-     }, [cart]);
+     // useEffect(() => {
+     //      total();
+     // }, [cart]);
 
      // const total = (ind) => {
      //      let totalVal = 0;
@@ -43,61 +44,70 @@ const Shop = (items,cart_contents) => {
      //      }
      //      setCartTotal(totalVal);
      //      // whichTypeOfButton(ind);
-     // };cgit
+     // };
 
-     const total =()=>{
-          let totalVal=0;
-          console.log("IN TOTAL FUNCTION");
-          console.log(cart);
-          cart.forEach(element => {
-               totalVal+=element.active*element.price;
+     // const total =()=>{
+     //      let totalVal=0;
+     //      console.log("IN TOTAL FUNCTION");
+     //      console.log(cart);
+     //      cart.forEach(element => {
+     //           totalVal+=element.active*element.price;
+     //      });
+     //      setCartTotal(totalVal);
+     // }
+
+     // const addToCart = (el) => {
+     //      let current_cart = cart;
+     //      for (let i = 0; i < current_cart.length; i++) {
+     //           if (current_cart[i].id === el.id) {
+     //                current_cart[i].active = current_cart[i].active + 1;
+     //                // console.log(current_cart);
+     //                setCart([...current_cart]);
+     //                return;
+
+     //           }
+     //      }
+
+     //      el.active=1;
+     //      setCart([...cart, el]);
+     //      // https://www.1337xx.to/torrent/3255829/UDEMY-MODERN-REACT-WITH-REDUX-FTU/
+     //      // // // https://www.1337xx.to/torrent/4859774/Udemy-React-The-Complete-Guide-incl-Hooks-React-Router-Redux/
+     //      // https://www.1337xx.to/torrent/3905024/Udemy-Complete-React-Developer-in-2019-w-Redux-Hooks-GraphQL-FTU/
+     //      // https://www.1337xx.to/torrent/3814339/Udemy-React-The-Complete-Guide-incl-Hooks-React-Router-Redux-FTU/
+     //      // https://www.1337xx.to/torrent/3255829/UDEMY-MODERN-REACT-WITH-REDUX-FTU/
+     //      // https://www.1337xx.to/torrent/4859774/Udemy-React-The-Complete-Guide-incl-Hooks-React-Router-Redux/
+     //      // https://www.1337xx.to/torrent/3581160/UDEMY-React-The-Complete-Guide-incl-Hooks-React-Router-Redux-FTU/
+
+     // };
+
+     // const removeFromCart = (el) => {
+     //      let current_cart = cart;
+
+     //      // store.dispatch(remElement(el));
+     //      // console.log("IN THE REMOVE CART");
+     //      // console.log(cart);
+     //      // console.log("loop begins");
+
+     //      for (let i = 0; i < current_cart.length; i++)
+     //      {
+     //           if (current_cart[i].id === el.id) {
+     //                current_cart[i].active = Math.max(0, current_cart[i].active - 1);
+     //                console.log(current_cart);
+     //                setCart([...current_cart]);
+     //                return;
+     //           }
+     //      }
+     // }
+     const whatIsTotal =() =>{
+          let val=0;
+          cart_contents.forEach(element => {
+               val+=element.price*element.active;
           });
-          setCartTotal(totalVal);
+
+          return <div>
+               Total={val}
+          </div>
      }
-
-     const addToCart = (el) => {
-          let current_cart = cart;
-          for (let i = 0; i < current_cart.length; i++) {
-               if (current_cart[i].id === el.id) {
-                    current_cart[i].active = current_cart[i].active + 1;
-                    // console.log(current_cart);
-                    setCart([...current_cart]);
-                    return;
-
-               }
-          }
-
-          el.active=1;
-          setCart([...cart, el]);
-          // https://www.1337xx.to/torrent/3255829/UDEMY-MODERN-REACT-WITH-REDUX-FTU/
-          // // // https://www.1337xx.to/torrent/4859774/Udemy-React-The-Complete-Guide-incl-Hooks-React-Router-Redux/
-          // https://www.1337xx.to/torrent/3905024/Udemy-Complete-React-Developer-in-2019-w-Redux-Hooks-GraphQL-FTU/
-          // https://www.1337xx.to/torrent/3814339/Udemy-React-The-Complete-Guide-incl-Hooks-React-Router-Redux-FTU/
-          // https://www.1337xx.to/torrent/3255829/UDEMY-MODERN-REACT-WITH-REDUX-FTU/
-          // https://www.1337xx.to/torrent/4859774/Udemy-React-The-Complete-Guide-incl-Hooks-React-Router-Redux/
-          // https://www.1337xx.to/torrent/3581160/UDEMY-React-The-Complete-Guide-incl-Hooks-React-Router-Redux-FTU/
-
-     };
-
-     const removeFromCart = (el) => {
-          let current_cart = cart;
-
-          // store.dispatch(remElement(el));
-          // console.log("IN THE REMOVE CART");
-          // console.log(cart);
-          // console.log("loop begins");
-
-          for (let i = 0; i < current_cart.length; i++)
-          {
-               if (current_cart[i].id === el.id) {
-                    current_cart[i].active = Math.max(0, current_cart[i].active - 1);
-                    console.log(current_cart);
-                    setCart([...current_cart]);
-                    return;
-               }
-          }
-     }
-
      const whichButton = (el) => {//USE FUNCTIONAL PROGRAMMING- foreach
           // for (let i = 0; i < cart.length; i++) 
           // {
@@ -112,18 +122,37 @@ const Shop = (items,cart_contents) => {
           //      }
           // }
           console.log('IN WHICH BUTTON');
-          console.log(cart_contents);
+
+          var flag=false;
           cart_contents.forEach(element => {
-               if (el.id === element.id && element.active>0) 
-               {
-                    return (<div className="ButttonCART">
-                         <button onClick={() => {store.dispatch(addThistocart(el.id));
-                        }}>+</button>
-                         <text>{el.active}</text>
-                         <button onClick={() => {store.dispatch(removeThisFromCart(el.id));}}>-</button>
-                    </div>);
-               }
+               flag=flag || (el.id === element.id && element.active > 0);
           });
+
+
+          if(flag)
+          {
+               return cart_contents.map(element => {
+                    if (el.id === element.id && element.active > 0) {
+                         console.log('FOUND ID ');
+                         return (<div className="ButttonCART">
+                              <button onClick={() => {
+                                   store.dispatch(addThistocart(el.id));
+                              }}>+</button>
+                              <text>{el.active}</text>
+                              <button onClick={() => { store.dispatch(removeThisFromCart(el.id)); }}>-</button>
+                         </div>);
+                    }
+                    if(!flag)
+                    {
+                         return (<div className="ButtonCART">
+                              <button onClick={() => {
+                                   store.dispatch(addThistocart(el.id));
+                              }}>ADD TO CART</button>
+                         </div>);
+                    }
+               });
+          }
+
           return (<div className="ButtonCART">
                <button onClick={() => {store.dispatch(addThistocart(el.id));
               }}>ADD TO CART</button>
@@ -142,10 +171,8 @@ const Shop = (items,cart_contents) => {
                               {whichButton(el)}
                          </div>
                     ))}
-
                </div>
-               <div>Total:{cartTotal}</div>
-               
+               {whatIsTotal()}
                <div>
                     <Link to={{
                          pathname:"/summary",
@@ -165,8 +192,8 @@ const mapStateToProps=state=>{
      console.log("IN MAP STATE TO PROPS");
      console.log(state);
      return {
-          items:state.shop.product,
-          cart_contents:state.shop.cart
+          items:[...state.shop.product],
+          cart_contents:[...state.shop.cart]
      }
 }
 
