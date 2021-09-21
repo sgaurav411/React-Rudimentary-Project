@@ -22,7 +22,7 @@ const displayCount=(params)=>{
 
 const mapStateToProps = state =>{
     return {
-        params:state.shop.cart
+        params:[...state.shop.cart]
     }
 }
 
