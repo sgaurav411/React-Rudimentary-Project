@@ -7,6 +7,7 @@ import {BrowserRouter,Switch, Route} from 'react-router-dom';
 import displayCart from "./DisplayCartSummary";
 import {Link} from 'react-router-dom';
 import HowManyInTheCart from "./HowManyInTheCart";
+import currentTotal from "./calculateTotal";
 
 function App()
 {
@@ -17,6 +18,7 @@ function App()
           <h1>DEMO E-Commerce</h1>
         </div>
         <Route path="/" exact component={Shop}/>
+        {/* <Route path="/"  component={currentTotal}/> */}
         <Route path="/summary" component={displayCart} />
       </div>
     </BrowserRouter>
