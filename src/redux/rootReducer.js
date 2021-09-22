@@ -1,5 +1,5 @@
 import { combineReducers } from "redux";
-import shopReducer from './Shopping/shopping-reducers'
+import shopReducer from './Shopping/shopping-actions'
 
 const rootReducer=combineReducers({
     shop:shopReducer

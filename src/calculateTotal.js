@@ -6,7 +6,7 @@ import {createStore} from 'redux';
 import {Link} from 'react-router-dom';
 import { connect } from "react-redux";
 import {useDispatch ,useSelecto} from "react-redux";
-import {addThistocart,removeThisFromCart} from './redux/Shopping/shopping-actions';
+import {addThistocart,removeThisFromCart} from './redux/Shopping/shopping-reducers';
 import store from "./redux/store.js";
 import {Component} from "react";
 

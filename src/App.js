@@ -18,7 +18,7 @@ function App()
           <h1>DEMO E-Commerce</h1>
         </div>
         <Route path="/" exact component={Shop}/>
-        {/* <Route path="/"  component={currentTotal}/> */}
+        <Route path="/"  component={currentTotal}/>
         <Route path="/summary" component={displayCart} />
       </div>
     </BrowserRouter>
