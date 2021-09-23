@@ -4,7 +4,7 @@ export const addThistocart=(itemId)=>{
     return {
         type:actionTypes.ADD_TO_CART,
         payload:{
-            id:itemId
+            obj:itemId
         }
     };
 };

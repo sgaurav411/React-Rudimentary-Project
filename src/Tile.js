@@ -8,65 +8,46 @@ import { connect } from "react-redux";
 import {useDispatch ,useSelector} from "react-redux";
 import {addThistocart,removeThisFromCart} from './redux/Shopping/shopping-reducers';
 import store from "./redux/store.js";
-import currentTotal from "./calculateTotal";
 import Axios from "axios";
-// import { response } from "express";
-// import { response } from "express";
-
+import axios from "axios";
+import CurrentTotal from "./calculateTotal";
 
 const Shop = (items,cart_contents) => {
 
      const dispatch=useDispatch();
-     // console.log('items');
-     // console.log(items);
+
      cart_contents=items.cart_contents;
      items=items.items;
-     // console.log("ITEMS AND CART :")
-     // console.log(items);
-     // console.log("CART :::::::");
+ 
 
-     // console.log(cart_contents);
-    
-     const [listOfItems,setlistOfItems]=useState([]);
+     const [listOfItems, setlistOfItems] = useState([]);
 
-     useEffect(()=>{
-          console.log("IN USE EFFECT");
-          Axios.get("http://localhost:3001/getProducts").then(res=>{
-          console.log(res);
-          console.log(res.data.product);
-          setlistOfItems([...res.data.product]);
-     });
-     },[]);
-     
+     useEffect(async () => {
+          const result = await axios(
+               'http://localhost:3001/getProducts',
+          );
+          setlistOfItems(result.data);
+     }, []);
+
      
      const whichButton = (el) => {
-          // console.log('IN WHICH BUTTON');
+          
+          // ButtonDecider({el,cart_contents});
           var flag=false;
           cart_contents.forEach(element => {
-               flag=flag || (el.id === element.id && element.active > 0);
+               flag=flag || (el.id === element.id && element.quantity > 0);
           });
 
           if(flag)
           {
                return cart_contents.map(element => {
-                    if (el.id === element.id && element.active > 0) {
-                         console.log('FOUND ID ');
+                    if (el.id === element.id && element.quantity > 0) {
+                        
                          return (<div className="ButttonCART">
-                              <button onClick={() => {store.dispatch(addThistocart(el.id));
-                              // Axios.post("http://localhost:3001/insert", { elementId:el.id,change:1}).then(() => {
-                              //      console.log("POST REQUEST");
-                              // }).catch(() => {
-                              //      console.log("UNABLE TO POST");
-                              // });
-                              }
+                              <button onClick={() => { store.dispatch(addThistocart(el)); }
                               }>+</button>
-                              <text>{el.active}</text>
+                              <a>{el.quantity}</a>
                               <button onClick={() => {store.dispatch(removeThisFromCart(el.id));
-                              Axios.post("http://localhost:3001/insert", { elementId:el.id,change:-1}).then(() => {
-                                   console.log("POST REQUEST");
-                              }).catch(() => {
-                                   console.log("UNABLE TO POST");
-                              });
                               }}>-</button>
                          </div>);
                     }
@@ -74,14 +55,7 @@ const Shop = (items,cart_contents) => {
                     {
                          return (<div className="ButtonCART">
                               <button onClick={() => {
-                                   store.dispatch(addThistocart(el.id));
-                                   // Axios.post("http://localhost:3001/insert", { elementId:el.id,change:+1}).then(() => {
-                                   //      console.log("POST REQUEST");
-                                   // }).catch(() => {
-                                   //      console.log("UNABLE TO POST");
-
-                                   // }
-                                   // );
+                                   store.dispatch(addThistocart(el));
                               }}>ADD TO CART</button>
                          </div>);
                     }
@@ -89,15 +63,19 @@ const Shop = (items,cart_contents) => {
           }
 
           return (<div className="ButtonCART">
-               <button onClick={() => {store.dispatch(addThistocart(el.id));
-          
-                    // Axios.post("http://localhost:3001/insert", { elementId:el.id,change:1}).then(() => {
-                    //      console.log("POST REQUEST");
-                    // }).catch(() => {
-                    //      console.log("UNABLE TO POST");
-                    // });
+               <button onClick={() => {store.dispatch(addThistocart(el));
               }}>ADD TO CART</button>
           </div>);
+     }
+
+     const whatIsTotal =() =>{
+
+          let tot=0;
+          cart_contents.forEach(element => {
+               tot+=element.quantity*element.price;
+          });
+
+          return <div>TOTAL :  {tot} </div>
      }
 
      return (
@@ -106,18 +84,16 @@ const Shop = (items,cart_contents) => {
                     {listOfItems.map((el) => (
                          <div className="Box" key={el.id}>
                               <text>${el.price}</text>
-                              <img src={el.link} width="300px" height="200px" />
-                              <h1>{el.name}</h1>
-                              <h2>{el.description}</h2>
+                              <img src={el.imglink} width="300px" height="200px" />
                               {whichButton(el)}
                          </div>
                     ))}
                </div>
                
-               <div>
-                    <currentTotal/>
+               <div className="amountsTo">
+                    {whatIsTotal()}
                </div>
-               
+
                <div>
                     <Link to={{
                          pathname:"/summary",
