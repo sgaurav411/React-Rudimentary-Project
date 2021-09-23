@@ -8,6 +8,7 @@ import displayCart from "./DisplayCartSummary";
 import {Link} from 'react-router-dom';
 import HowManyInTheCart from "./HowManyInTheCart";
 import currentTotal from "./calculateTotal";
+import AddingProductToList from "./addingProduct";
 
 function App()
 {
@@ -17,8 +18,9 @@ function App()
         <div className="HEADING">
           <h1>DEMO E-Commerce</h1>
         </div>
+        <Route path="/addProduct" component={AddingProductToList}/>
         <Route path="/" exact component={Shop}/>
-        <Route path="/"  component={currentTotal}/>
+        {/* <Route path="/"  component={currentTotal}/> */}
         <Route path="/summary" component={displayCart} />
       </div>
     </BrowserRouter>

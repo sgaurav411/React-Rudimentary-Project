@@ -1,14 +1,7 @@
 import React, { useState, useEffect } from "react";
-import details from "./user-data.js";
-import { BrowserRouter,Switch, Route } from "react-router-dom";
-import Cart from "./DisplayCartSummary.js";
-import {createStore} from 'redux';
 import {Link} from 'react-router-dom';
 import { connect } from "react-redux";
-import {useDispatch ,useSelecto} from "react-redux";
-import {addThistocart,removeThisFromCart} from './redux/Shopping/shopping-reducers';
-import store from "./redux/store.js";
-import {Component} from "react";
+
 
 class currentTotal extends React.Component{
 
@@ -21,14 +14,14 @@ class currentTotal extends React.Component{
         let total = 0;
         this.props.inTheCart.forEach(element => {
             total += element.active * element.price;
-            console.log(element);
+            // console.log(element);
         });
         return (<div>Total : {total}</div>);
     }
 
     render(){
-        console.log("IN TOTAL:  ");
-        console.log(this.props);       
+        // console.log("IN TOTAL:  ");
+        // console.log(this.props);       
 
         return (this.doTheMath());
     }
@@ -40,6 +33,5 @@ const mapStateToProps = state => {
     }
 }
 
-// export default currentTotal;
 
 export default connect(mapStateToProps)(currentTotal);
